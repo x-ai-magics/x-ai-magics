@@ -1,0 +1,63 @@
+需求:
+  安装unimrcp
+
+系统描述:
+  VMware workstation 15
+  Centos7.2
+工具:
+  VMware workstation 15
+  SecureCRT 8.5
+  FileZilla clint(上传工具)
+1.unimrcp下载
+  http://www.unimrcp.org/downloads/core,下载unimrcp最新稳定发布版本,目前为1.6版本
+2.unimrcp依赖下载
+  http://www.unimrcp.org/downloads/core,下载unimrcp-deps-1.6,将依赖文件夹放在unimrcp主目录下,通过FileZilla clint上传到服务器上
+3.GNU build
+  检查是否安装以下工具:
+   autoconf 2.59 or newer
+   automake
+   libtool 1.4 or newer
+   gcc
+   pkg-config
+  首先，通过执行以下脚本来构建和安装依赖项
+    ./build-dep-libs.sh
+  接下来，继续使用UniMRCP构建。如果已从存储库检出源代码，则必须首先执行引导脚本，以生成配置脚本和其他所需文件.
+    ./bootstrap
+  按照命令configure，make和make install的常规顺序，以便从源代码构建和安装项目
+    ./configure
+    make
+    make install
+4.检查结果
+  文件夹 ../unimrcp/  下必须有如下的文件夹:
+  ❖ bin binaries (unimrcpserver, unimrcpclient, ...)
+  ❖ conf configuration files (unimrcpserver.xml, unimrcpclient.xml, ...)
+  ❖ data data files
+  ❖ lib shared (convenience) libraries
+  ❖ log log files
+  ❖ plugin run-time loadable modules
+  
+5.测试安装结果
+  登陆unimrcp server
+    cd /usr/local/unimrcp/bin
+    ./unimrcpserver
+  测试unimrcp client样例
+    cd /usr/local/unimrcp/bin
+    ./umc
+    
+  通过从UniMRCP客户端应用程序的控制台发出相应的命令，运行典型的语音合成，识别，记录和验证方案.
+  语音合成:
+    run synth
+  语音识别:
+    run recog
+  DTMF识别:
+    run dtmf
+  语音录音:
+    run rec
+  语音验证:
+    run verify
+    
+    
+    
+注意事项:
+  1.用Centos7及其以上的系统时,检测ip地址:ip addr 而不是 ifconfig
+  2.再VMware Workstation安装Centos7.iso时,会出现" Intel VT-x 处于禁用状态"的错误,需要进入系统BIOS将Intel Virtualization Technology修改成YES.
