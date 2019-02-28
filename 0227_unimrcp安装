@@ -19,6 +19,28 @@
    libtool 1.4 or newer
    gcc
    pkg-config
+  若autoconf，automake，libtool没有安装按一下步骤完成：
+  安装autoconf
+  wget http://mirrors.kernel.org/gnu/autoconf/autoconf-2.65.tar.gz \ 
+  && tar -xzvf autoconf-2.65.tar.gz \ 
+  && cd autoconf-2.65 \ 
+  && ./configure –prefix=/usr/local 
+  make && make install
+
+  安装automake：
+  wget http://mirrors.kernel.org/gnu/automake/automake-1.11.tar.gz \ 
+  && tar -xzvf automake-1.11.tar.gz \ 
+  && cd automake-1.11 \ 
+  && ./configure –prefix=/usr/local 
+  make && make install
+  
+  安装libtool：
+  wget http://mirrors.kernel.org/gnu/libtool/libtool-2.2.6b.tar.gz \ 
+  && tar -xzvf libtool-2.2.6b.tar.gz \ 
+  && cd libtool-2.2.6b \ 
+  && ./configure –prefix=/usr/local 
+  make && make install
+4.构建依赖项及安装项目
   首先，通过执行以下脚本来构建和安装依赖项
     ./build-dep-libs.sh
   接下来，继续使用UniMRCP构建。如果已从存储库检出源代码，则必须首先执行引导脚本，以生成配置脚本和其他所需文件.
@@ -27,7 +49,7 @@
     ./configure
     make
     make install
-4.检查结果
+5.检查结果
   文件夹 ../unimrcp/  下必须有如下的文件夹:
   ❖ bin binaries (unimrcpserver, unimrcpclient, ...)
   ❖ conf configuration files (unimrcpserver.xml, unimrcpclient.xml, ...)
@@ -36,7 +58,7 @@
   ❖ log log files
   ❖ plugin run-time loadable modules
   
-5.测试安装结果
+6.测试安装结果
   登陆unimrcp server
     cd /usr/local/unimrcp/bin
     ./unimrcpserver
