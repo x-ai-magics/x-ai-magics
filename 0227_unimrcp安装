@@ -2,16 +2,14 @@
   安装unimrcp
 
 系统描述:
-  VMware workstation 15
-  Centos7.2
+  Centos7.5
 工具:
-  VMware workstation 15
   SecureCRT 8.5
   FileZilla clint(上传工具)
 1.unimrcp下载
-  http://www.unimrcp.org/downloads/core,下载unimrcp最新稳定发布版本,目前为1.6版本
+  http://www.unimrcp.org/downloads/core,下载unimrcp最新稳定发布版本,目前为1.6版本,并上传到服务器上
 2.unimrcp依赖下载
-  http://www.unimrcp.org/downloads/core,下载unimrcp-deps-1.6,将依赖文件夹放在unimrcp主目录下,通过FileZilla clint上传到服务器上
+  http://www.unimrcp.org/downloads/dependencies,下载unimrcp-deps-1.6,将,通过FileZilla clint上传到服务器上
 3.GNU build
   检查是否安装以下工具:
    autoconf 2.59 or newer
@@ -40,17 +38,25 @@
   && cd libtool-2.2.6b \ 
   && ./configure –prefix=/usr/local 
   make && make install
+  
+  或者也可以
+  先执行:yum install epel-release    //安装linux的额外包
+  然后分别执行:yum groupinstall autoconf
+              yum groupinstall automake
+              yum groupinstall libtool
+              yun groupinstall gcc
+  检查是否安装成功:rpm -qa|grep autoconf(同理可以检查automake等)
 4.构建依赖项及安装项目
-  首先，通过执行以下脚本来构建和安装依赖项
+  首先,进入unimrcp-deps-1.6.0文件夹,执行脚本:
     ./build-dep-libs.sh
-  接下来，继续使用UniMRCP构建。如果已从存储库检出源代码，则必须首先执行引导脚本，以生成配置脚本和其他所需文件.
+  接下来进入unimrcp-1.6.0,执行引导脚本，以生成配置脚本和其他所需文件.
     ./bootstrap
   按照命令configure，make和make install的常规顺序，以便从源代码构建和安装项目
     ./configure
     make
     make install
 5.检查结果
-  文件夹 ../unimrcp/  下必须有如下的文件夹:
+  上述操作完成后,会在上级目录下生成个unimrcp的文件夹,此文件夹下必须有如下的文件夹:
   ❖ bin binaries (unimrcpserver, unimrcpclient, ...)
   ❖ conf configuration files (unimrcpserver.xml, unimrcpclient.xml, ...)
   ❖ data data files
@@ -77,9 +83,8 @@
     run rec
   语音验证:
     run verify
-    
-    
+      
     
 注意事项:
   1.用Centos7及其以上的系统时,检测ip地址:ip addr 而不是 ifconfig
-  2.再VMware Workstation安装Centos7.iso时,会出现" Intel VT-x 处于禁用状态"的错误,需要进入系统BIOS将Intel Virtualization Technology修改成YES.
+
