@@ -1,0 +1,90 @@
+需求:
+  安装unimrcp
+
+系统描述:
+  Centos7.5
+工具:
+  SecureCRT 8.5
+  FileZilla clint(上传工具)
+1.unimrcp下载
+  http://www.unimrcp.org/downloads/core,下载unimrcp最新稳定发布版本,目前为1.6版本,并上传到服务器上
+2.unimrcp依赖下载
+  http://www.unimrcp.org/downloads/dependencies,下载unimrcp-deps-1.6,将,通过FileZilla clint上传到服务器上
+3.GNU build
+  检查是否安装以下工具:
+   autoconf 2.59 or newer
+   automake
+   libtool 1.4 or newer
+   gcc
+   pkg-config
+  若autoconf，automake，libtool没有安装按一下步骤完成：
+  安装autoconf
+  wget http://mirrors.kernel.org/gnu/autoconf/autoconf-2.65.tar.gz \ 
+  && tar -xzvf autoconf-2.65.tar.gz \ 
+  && cd autoconf-2.65 \ 
+  && ./configure –prefix=/usr/local 
+  make && make install
+
+  安装automake：
+  wget http://mirrors.kernel.org/gnu/automake/automake-1.11.tar.gz \ 
+  && tar -xzvf automake-1.11.tar.gz \ 
+  && cd automake-1.11 \ 
+  && ./configure –prefix=/usr/local 
+  make && make install
+  
+  安装libtool：
+  wget http://mirrors.kernel.org/gnu/libtool/libtool-2.2.6b.tar.gz \ 
+  && tar -xzvf libtool-2.2.6b.tar.gz \ 
+  && cd libtool-2.2.6b \ 
+  && ./configure –prefix=/usr/local 
+  make && make install
+  
+  或者也可以
+  先执行:yum install epel-release    //安装linux的额外包
+  然后分别执行:yum groupinstall autoconf
+              yum groupinstall automake
+              yum groupinstall libtool
+              yun groupinstall gcc
+  检查是否安装成功:rpm -qa|grep autoconf(同理可以检查automake等)
+4.构建依赖项及安装项目
+  首先,进入unimrcp-deps-1.6.0文件夹,执行脚本:
+    ./build-dep-libs.sh
+  接下来进入unimrcp-1.6.0,执行引导脚本，以生成配置脚本和其他所需文件.
+    ./bootstrap
+  按照命令configure，make和make install的常规顺序，以便从源代码构建和安装项目
+    ./configure
+    make
+    make install
+5.检查结果
+  上述操作完成后,会在上级目录下生成个unimrcp的文件夹,此文件夹下必须有如下的文件夹:
+  ❖ bin binaries (unimrcpserver, unimrcpclient, ...)
+  ❖ conf configuration files (unimrcpserver.xml, unimrcpclient.xml, ...)
+  ❖ data data files
+  ❖ lib shared (convenience) libraries
+  ❖ log log files
+  ❖ plugin run-time loadable modules
+  
+6.测试安装结果
+  登陆unimrcp server
+    cd /usr/local/unimrcp/bin
+    ./unimrcpserver
+  测试unimrcp client样例
+    cd /usr/local/unimrcp/bin
+    ./umc
+    
+  通过从UniMRCP客户端应用程序的控制台发出相应的命令，运行典型的语音合成，识别，记录和验证方案.
+  语音合成:
+    run synth
+  语音识别:
+    run recog
+  DTMF识别:
+    run dtmf
+  语音录音:
+    run rec
+  语音验证:
+    run verify
+      
+    
+注意事项:
+  1.用Centos7及其以上的系统时,检测ip地址:ip addr 而不是 ifconfig
+
